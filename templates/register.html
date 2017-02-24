@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+</head>
+<body>
+<div class="register-form">
+<form>
+	<div class="form-group">
+		<label for="first_name"><p>First Name:</p></label>
+		<input name='first_name' class="form-control" id="first_name" placeholder="First Name" type="text">
+	</div>
+
+	<div class="form-group">
+		<label for="last_name"><p>Last Name:</p></label>
+		<input name='last_name' class="form-control" id="last_name" placeholder="Last Name" type="text">
+	</div>
+
+	<div class="form-group">
+		<label for="age"><p>Age:</p></label>
+		<input name='age' class="form-control" id="age" placeholder="Age" type="number">
+	</div>
+
+	<div class="form-group">
+	  <label for="gender"><p>Select list:</p></label>
+	  <select class="form-control" id="gender">
+	    <option selected="true"><p>Male</p></option>
+	    <option><p>Female</p></option>
+	    
+	  </select>
+	</div>
+	<div class="submit-btn-container">
+		<input type="submit" id="submitbtn" class="btn btn-info submit-btn" value="Submit Button">
+	</div>
+	
+	
+</form>
+</div>
+
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+
+</body>
+</html>     
