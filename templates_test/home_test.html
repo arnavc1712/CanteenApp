@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/css/app.8175ad9f.css.gz">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/csshake.css')}}">
+
+
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/smoke.css')}}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://use.fontawesome.com/3d614a9e46.js"></script>
+	<script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+	<script src="{{url_for('static',filename='js/jquery.sticky.js')}}"></script>
+	<script src="{{url_for('static',filename='js/smooth-scroll.js')}}"></script>
+
+
+</head>
+<body data-spy="scroll" data-target="#sup">
+
+	<div class="navbar-head">
+		<nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                         <button type="button" class="navbar-toggle collapsed" data-toggle="modal" data-target="#nav-modal" aria-expanded="false">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#" id="navbar-title">Canteen App</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#SignUpModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button></a></li>
+                            <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#LoginModal"><span class="glyphicon glyphicon-log-in"></span> Login</button></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+		  <div class="bg-image"><img src="{{ url_for('static', filename='img/home-bg.jpg') }}"></div>
+          
+	</div>
+
+<div class="content">
+	<div class="img-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="icon-container">
+						<div class="icon shake-slow">
+							<span class="icon-swgy-lightning"></span>
+						</div>
+						<p>Lightning Fast Delivery</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="icon-container">
+						<div class="icon shake-slow">
+							<span class="icon-swgy-bell"></span>
+						</div>
+						<p>No Minimum Order</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="icon-container">
+						<div class="icon shake-slow">
+							<span class="icon-swgy-wallet"></span>
+						</div>
+						<p>Pay via Wallet/Cash</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+	<div class="footer">
+		
+	</div>
+
+
+ <!--  OVERLAY MODEL -->
+		  <div class="modal fade" id="nav-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-nav-content">
+			      <div class="modal-nav-body">
+			        <ul>
+			          <li><a href="">Brand</a></li>
+			          <li><a href="#">Home</a></li>
+			          <li><a href="#" data-toggle="modal" data-target="#LoginModal">Login</a></li>
+			          <li><a href="#" data-toggle="modal" data-target="#SignUpModal">Sign up</a></li>
+			        </ul>
+			      </div>
+			    </div>
+			  </div>
+		</div>
+
+
+	 <!-- SIGNUP MODAL -->
+	<div id="SignUpModal" class="modal fade" role="dialog">
+	  	<div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+			      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h4 class="modal-title"><p>Sign Up</h4>
+			      </div>
+			      <div class="modal-body">
+				        <div class="register-form">
+							<form data-smk-icon="glyphicon-remove-sign" id="signUpForm">
+								<div class="form-group">
+									<label for="first_name" class="control-label"><p>First Name:</p></label>
+									<input name='first_name' class="form-control" id="first_name" placeholder="First Name" type="text" required>
+								</div>
+
+								<div class="form-group">
+									<label for="last_name" class="control-label"><p>Last Name:</p></label>
+									<input name='last_name' class="form-control" id="last_name" placeholder="Last Name" type="text" required>
+								</div>
+
+								<div class="form-group">
+									<label for="sap_id" class="control-label"><p>SAP ID:</p></label>
+									<input name='sap_id' class="form-control" id="sap_id" placeholder="SAP ID" type="number" required>
+								</div>
+
+								<div class="form-group">
+								  <label for="email" class="control-label"><p>Email:</p></label>
+								  <input name='email' class="form-control" id="email" placeholder="example@xyz.com" type="email" required>
+								</div>
+
+								<div class="form-group">
+									<label for="tel_no" class="control-label"><p>Phone Number:</p></label>
+									<input name='tel_no' class="form-control" id="tel_no" placeholder="Phone Number" type="number" required>
+								</div>
+
+								<div class="form-group">
+								  <label for="password" class="control-label"><p>Password:</p></label>
+								  <input name='password' class="form-control" id="password" placeholder="Password" type="password" required>
+								</div>
+
+								<div class="submit-btn-container">
+									<input type="submit" id="signup-submitbtn" class="btn btn-info submit-btn" value="Submit Button">
+								</div>
+								
+								
+							</form>
+						</div>
+			      </div>
+			      
+		    </div>
+
+	  	</div>
+	</div>
+
+
+	 <!-- LOGIN MODAL -->
+	 <div id="LoginModal" class="modal fade" role="dialog">
+	  	<div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+			      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h4 class="modal-title"><p>Login</h4>
+			      </div>
+			      <div class="modal-body">
+				        <div class="register-form">
+							<form data-smk-icon="glyphicon-remove-sign" id="LoginForm">
+
+								<div class="form-group">
+									<label for="sap_id" class="control-label"><p>SAP ID:</p></label>
+									<input name='sap_id' class="form-control" id="login_sap_id" placeholder="SAP ID" type="number" required>
+								</div>
+
+
+								<div class="form-group">
+								  <label for="password" class="control-label"><p>Password:</p></label>
+								  <input name='password' class="form-control" id="login_password" placeholder="Password" type="password" required>
+								</div>
+
+								<div class="submit-btn-container">
+									<input type="submit" id="login-submitbtn" class="btn btn-info submit-btn" value="Submit Button">
+								</div>
+								
+								
+							</form>
+						</div>
+			      </div>
+			      
+		    </div>
+
+	  	</div>
+	</div>
+
+
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+<script src="{{ url_for('static', filename='js/smoke.js') }}"></script>
+<script>smoothScroll.init();</script>
+</body>
+</html>

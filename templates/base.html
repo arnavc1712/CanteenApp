@@ -29,27 +29,42 @@
 	<div class="navbar-head">
 		<nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <div class="navbar-header">
-                         <button type="button" class="navbar-toggle collapsed" data-toggle="modal" data-target="#nav-modal" aria-expanded="false">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+                    <div class="navbar-header" id="navTitle">
+                         <button type="button" class="navbar-toggle navbar-toggle-left collapsed" data-toggle="modal" data-target="#nav-modal" aria-expanded="false">
+                            <span class="fa fa-bars"></span>
                         </button>
                         <a class="navbar-brand" href="#" id="navbar-title">Canteen App</a>
                     </div>
+
+                    <div class="navbar-header" id="navItems">
+                         <!-- <button type="button" class="navbar-toggle navbar-toggle-left collapsed" data-toggle="collapse" data-target="#collapse1" aria-expanded="false">
+                            <p>Appetizers</p><span class="glyphicon glyphicon-chevron-down"></span>
+                        </button> -->
+                        <a class="navbar-brand" id="navbar-title"><p>Appetizers</p> <span class="glyphicon glyphicon-chevron-down"></span></a>
+                    </div>
+
                     <div class="collapse navbar-collapse" id="myNavbar">
-                        
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#SignUpModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button></a></li>
-                            <li><a href="#"><button class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Login</button></a></li>
+                            <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#LoginModal"><span class="glyphicon glyphicon-log-in"></span> Login</button></a></li>
                         </ul>
                     </div>
                 </div>
-            </nav>
+        </nav>           
 
-		  <div class="bg-image"><img src="{{ url_for('static', filename='img/home-bg.jpg') }}"></div>
-          
+        <div class="mobile-items-menu">
+				<ul>
+					<li ><a data-scroll href="#1">Appetizers</a></li>
+		            <li ><a data-scroll href="#2">Blah</a></li>
+		            <li ><a data-scroll href="#">Menu Item 3</a></li>
+		            <li ><a data-scroll href="#">Menu Item 4</a></li>
+				</ul>
+		</div>
 	</div>
+
+ <div class="bg-image" id="bg-image">
+		   <img src="{{ url_for('static', filename='img/home-bg.jpg') }}">
+		  </div>
 
 <div class="content">
 	{% block content %}{% endblock %}
@@ -69,7 +84,7 @@
 			        <ul>
 			          <li><a href="">Brand</a></li>
 			          <li><a href="#">Home</a></li>
-			          <li><a href="#">Login</a></li>
+			          <li><a href="#" data-toggle="modal" data-target="#LoginModal">Login</a></li>
 			          <li><a href="#" data-toggle="modal" data-target="#SignUpModal">Sign up</a></li>
 			        </ul>
 			      </div>
@@ -102,22 +117,67 @@
 								</div>
 
 								<div class="form-group">
-									<label for="age" class="control-label"><p>Age:</p></label>
-									<input name='age' class="form-control" id="age" placeholder="Age" type="number" required>
+									<label for="sap_id" class="control-label"><p>SAP ID:</p></label>
+									<input name='sap_id' class="form-control" id="sap_id" placeholder="SAP ID" type="number" required>
 								</div>
 
 								<div class="form-group">
-								  <label for="gender" class="control-label"><p>Select list:</p></label>
-								  <select class="form-control" id="gender" required>
+								  <label for="email" class="control-label"><p>Email:</p></label>
+								  <input name='email' class="form-control" id="email" placeholder="example@xyz.com" type="email" required>
+								</div>
 
-								    <option><p>Male</p></option>
-								    <option><p>Female</p></option>
-								    
-								  </select>
+								<div class="form-group">
+									<label for="tel_no" class="control-label"><p>Phone Number:</p></label>
+									<input name='tel_no' class="form-control" id="tel_no" placeholder="Phone Number" type="number" required>
+								</div>
+
+								<div class="form-group">
+								  <label for="password" class="control-label"><p>Password:</p></label>
+								  <input name='password' class="form-control" id="password" placeholder="Password" type="password" required>
 								</div>
 
 								<div class="submit-btn-container">
 									<input type="submit" id="signup-submitbtn" class="btn btn-info submit-btn" value="Submit Button">
+								</div>
+								
+								
+							</form>
+						</div>
+			      </div>
+			      
+		    </div>
+
+	  	</div>
+	</div>
+
+
+	 <!-- LOGIN MODAL -->
+	 <div id="LoginModal" class="modal fade" role="dialog">
+	  	<div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+			      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h4 class="modal-title"><p>Login</h4>
+			      </div>
+			      <div class="modal-body">
+				        <div class="register-form">
+							<form data-smk-icon="glyphicon-remove-sign" id="LoginForm">
+
+								<div class="form-group">
+									<label for="sap_id" class="control-label"><p>SAP ID:</p></label>
+									<input name='sap_id' class="form-control" id="login_sap_id" placeholder="SAP ID" type="number" required>
+								</div>
+
+
+								<div class="form-group">
+								  <label for="password" class="control-label"><p>Password:</p></label>
+								  <input name='password' class="form-control" id="login_password" placeholder="Password" type="password" required>
+								</div>
+
+								<div class="submit-btn-container">
+									<input type="submit" id="login-submitbtn" class="btn btn-info submit-btn" value="Submit Button">
 								</div>
 								
 								
