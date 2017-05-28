@@ -1,24 +1,37 @@
 $(document).ready(function(){
+$(document).load($(window).bind("resize", function(){
+	if($(window).width()<=900){
+		$(".canteen-cart").unstick();
 
-if (window.location.pathname == '/menu'){
-	if($(window).width()>600)
-	{$("div.bg-image").css({"height":"64px","overflow":"hidden"});}
-	
+		
+	}
+
 	else{
-		$(".menu-list-headers-body-wrapper").remove();
-		$(".canteen-cart-container").remove();
+		$(".canteen-cart").sticky({topSpacing:0});
+	}
+}));
+if (window.location.pathname == '/menu'){
+	// if($(window).width()<=600)
+	// {$("div.bg-image").css({"height":"64px","overflow":"hidden"});}
+	
+	
+		// $(".menu-list-headers-body-wrapper").remove();
+		// $(".canteen-cart-container").remove();
+
 		$("#navItems a").click(function(){
+			$(".navbar-head").toggleClass("active");
 			$(".mobile-items-menu").slideToggle(function(){mobileItemMenuToggle()});
 			
 		})
 
 		$(".mobile-items-menu li a").click(function(){
+			$(".navbar-head").removeClass("active");
 			$(".mobile-items-menu").slideUp(function(){mobileItemMenuToggle()});
 		})
 
 		changeMainNav();
 
-	}
+	
 
 }
 
@@ -28,6 +41,11 @@ $(".canteen-cart").sticky({topSpacing:0});
 $(".add-button button").click(function(){
 	item_title=addToCart(this);
 	title_object=addItem(item_title);
+
+	if($(window).width()<=900)
+	{
+	$(".mobile-cart-container").css("display","block");}
+	
 
 	$(".cart-icon-container").remove();
 	$("#cartItemTable tbody").append(title_object);
@@ -43,7 +61,18 @@ $(".add-button button").click(function(){
 });
 
 
+$(".mobile-cart-icon-container, .mobile-item-price").click(function(){
+	$(".cart-content").slideToggle(function(){
+		cartContentToggler();
+	});
 
+})
+
+$(".mobile-cart-content-header a").click(function(){
+	$(".cart-content").slideUp(function(){
+		cartContentToggler();
+	});
+})
 
 
 
@@ -68,10 +97,8 @@ $("#signup-submitbtn").click(function(){
 	console.log(data);
 	if ($('#signUpForm').smkValidate()) {
     // Code here
-    $.smkAlert({
-      text: 'Validate!',
-      type: 'success'
-    });
+   
+
 
     $.ajax({
 			url:"/test",
@@ -81,7 +108,22 @@ $("#signup-submitbtn").click(function(){
 			success: function(data)
 			{
 				console.log(data);
-				window.location.replace('/test');
+				if(data=="False"){
+					if($("#SignUpModal .register-form .form_err_msg ").length!=1){
+						$("#SignUpModal .register-form .form-group:eq(5) ").after("<p class='form_err_msg'>User already exists.</p>")
+					}
+				}
+				else{
+
+					$("#SignUpModal .register-form .form_err_msg ").remove()
+					 $.smkAlert({
+      				 text: 'Validate!',
+      				 type: 'success'
+    				 });
+				}
+
+
+				
 			}});
   }
 
@@ -107,19 +149,30 @@ $("#login-submitbtn").click(function(){
       text: 'Validate!',
       type: 'success'
     });
-    data=JSON.stringify(data,null, '\t');
-    console.log(data);
+    
 
-   //  $.ajax({
-			// url:"/test",
-			// type: "POST",
-			// data: JSON.stringify(data,null, '\t'),
-			// contentType: 'application/json; charset=UTF-8',
-			// success: function(data)
-			// {
-			// 	console.log(data);
-			// 	window.location.replace('/test');
-			// }});
+    $.ajax({
+			url:"/login",
+			type: "POST",
+			data: JSON.stringify(data,null, '\t'),
+			contentType: 'application/json; charset=UTF-8',
+			success: function(message)
+			{
+				console.log(message);
+				if(message=="True"){
+					$.smkAlert({
+      				text: 'Validate!',
+      				type: 'success'
+    				});
+					location.reload();
+				}
+				else{
+					if($("#LoginModal .register-form .form_err_msg").length!=1){
+					$("#LoginModal .register-form .form-group:eq(1) ").after("<p class='form_err_msg'>Wrong ID or password</p>")
+					}
+				}
+				
+			}});
   }
 
 
@@ -160,6 +213,7 @@ function removeItem(rmvBtnArgs){
 	$(rmvBtnArgs).parents("tr").remove();
 	if($("#cartItemTable>tbody>tr").length==0){
 		$(".canteen-cart").append(addCartIcon());
+		$(".mobile-cart-container").css("display","none");
 
 	}
 
@@ -238,14 +292,22 @@ function updateBillValue(addValue,addBtn){
 })
 	console.log(temp);
 
-	$(".price p").text(temp);
-	$(".total-amt p").text(temp);
+	total_qty=0;
+	$(".item-qty-wrapper").each(function(index,element){
+		total_qty+=parseInt($(element).text())
+	})
+
+	$(".price p").text('Rs '+temp);
+	$(".total-amt p").text('Rs '+temp);
+	$(".mobile-item-price p").text('Rs '+ temp);
+	$(".mobile-item-qty p").text(total_qty);
+
 }
 
 
 function changeMainNav(){
 	var scroll_start = 0;
-   var startchange = $('.menu-item-container-wrapper');
+   var startchange = $('.menu-list');
    var offset = startchange.offset();
     if (startchange.length){
    $(document).scroll(function() { 
@@ -258,7 +320,7 @@ function changeMainNav(){
 
           changeItemNav();
 
-       } else {
+       } else if(scroll_start <= offset.top) {
 
         $("#navItems").css('display','none');
           // $("#navTitle").css('display','block');
@@ -295,13 +357,28 @@ function changeItemNav(){
 function mobileItemMenuToggle(){
 	if($('.mobile-items-menu').css('display')=="block"){
 				$("#navItems a span").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
+				// $(".navbar-head").css("height","100%");
 			}
 
 	else if($('.mobile-items-menu').css('display')=="none"){
 				$("#navItems a span").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
+				// $(".navbar-head").css("height","auto");
 			}
 
 }
 
+
+function cartContentToggler(){
+	if($('.cart-content').css('display')=="block"){
+		// $(".canteen-cart-container").css("margin-top","100%");
+		$(".cart-content").css("margin-top","0px");
+	}
+
+	else if($('.cart-content').css('display')=="none"){
+		// $(".canteen-cart-container").css("margin-top","auto");
+		$(".cart-content").css("margin-top","auto");
+	}
+
+}
 
 

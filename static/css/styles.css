@@ -34,6 +34,7 @@ p{
 .navbar-header span{
 	color: white;
 	font-size: 16px;
+	transition: all .2s ease-in-out;
 }
 
 .navbar-header button{
@@ -69,6 +70,10 @@ p{
 	opacity: 0.7;
 	width: 100%;
 	z-index: 5;
+}
+
+.active{
+	height: 100%;
 }
 
 
@@ -581,8 +586,108 @@ td button{
 	display: none;
 }
 
+.mobile-cart-wrapper{
+	visibility: hidden;
+}
 
-@media only screen and (max-width: 500px) {
+.mobile-cart-container{
+		position: absolute;
+	    bottom: 0;
+	    width: 100%;
+	    box-shadow: 0px 0px 10px #888;
+	    background-color: #fff;
+	    z-index: 10;
+	    display: none;
+	}
+
+	.mobile-cart-wrapper{
+		position: fixed;
+	    width: 100%;
+	    height: 100%;
+	    bottom: 0;
+	    z-index: 40;
+	    display: block;
+	    
+	}
+
+	.mobile-cart-icon-container, .mobile-item-price, .mobile-chckout-btn{
+		display: inline-block;
+	}
+
+	.mobile-cart-icon-container{
+		width: 30%;
+	    height: 100%;
+	    vertical-align: top;
+	    text-align: center;
+	    border-right: 1px solid #ededed;
+	    padding-bottom: 20px;
+		padding-top: 20px;
+
+	}
+
+	.mobile-item-price{
+		width: 40%;
+		height: 100%;
+		border-right: 1px solid #ededed;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	.mobile-item-price p{
+		margin: 0 0 0px;
+		font-family: Light;
+		font-size: 16px;
+		color: #20ac76;
+	}
+
+	.mobile-chckout-btn{
+		width: 30%;
+		height: 100%;
+		background-color: #20ac76;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	.mobile-chckout-btn a{
+		text-decoration: none;
+		font-family: Light;
+		font-size: 16px;
+		color: #fff;
+		
+	}
+
+	.mobile-cart-icon-container span{
+		color: #20ac76;
+		font-size: 20px;
+		display: inline-block;
+	}
+
+	.mobile-cart-icon-container span p{
+		font-family: Light;
+		margin: 0 0 0px;
+		font-size: 16px;
+		color: #20ac76;
+	}
+
+	.mobile-cart-icon-container .mobile-item-qty{
+		margin-left: 3px;
+	}
+
+	.mobile-cart-content-header{
+		display: none;
+	}
+
+
+	.form_err_msg{
+		color: red;
+		margin: 0 auto;
+		text-align: center;
+		font-size: 16px;
+	}
+
+@media only screen and (max-width: 900px) {
 	.img-container .icon{
 		font-size: 40px;
 	}
@@ -610,10 +715,14 @@ td button{
 
 	.canteen-cart-container{
 		width: 100%;
+		height: auto;
 		padding-left: 0px;
 		padding-right: 0px;
 		position: fixed;
 		bottom: 0px;
+		left: 0px;
+		z-index: 40;
+
 	}
 
 	.navbar-head .navbar{
@@ -626,7 +735,7 @@ td button{
 	.navbar-head{
 		position: fixed;
 		width: 100%;
-		height: 100%;
+		/*height: auto;*/
 		z-index: 30;
 	}
 
@@ -641,14 +750,16 @@ td button{
     background-color: #ededed;
 	}
 
-	.navbar-head .bg-image{
+	#bg-image{
 		overflow: visible;
 		height: auto;
 	}
 
-	.navbar-head .bg-image img{
+	#bg-image img{
 		height: 200px;
 	}
+
+
 
 	.navbar-toggle-left{
 		float: left;
@@ -682,15 +793,24 @@ td button{
 		display: block;
 	}
 
-	.mobile-cart-container{
-		position: fixed;
-		width: 100%;
-		bottom: 0;
-		height: 100px;
-		background-color: #fff;
-		
-		box-shadow: 0px 0px 10px #888;
+	
+	/*.mobile-cart-container{
+		position: absolute;
+	    bottom: 0;
+	    width: 100%;
+	    box-shadow: 0px 0px 10px #888;
+	    background-color: #fff;
+	    z-index: 10;
+	}
 
+	.mobile-cart-wrapper{
+		position: fixed;
+	    width: 100%;
+	    height: 100%;
+	    bottom: 0;
+	    z-index: 40;
+	    display: block;
+	    
 	}
 
 	.mobile-cart-icon-container, .mobile-item-price, .mobile-chckout-btn{
@@ -698,25 +818,156 @@ td button{
 	}
 
 	.mobile-cart-icon-container{
-		width: 20%;
-		height: 100%;
+		width: 30%;
+	    height: 100%;
+	    vertical-align: top;
+	    text-align: center;
+	    border-right: 1px solid #ededed;
+	    padding-bottom: 20px;
+		padding-top: 20px;
 
 	}
 
 	.mobile-item-price{
-		width: 50%;
+		width: 40%;
 		height: 100%;
+		border-right: 1px solid #ededed;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	.mobile-item-price p{
+		margin: 0 0 0px;
+		font-family: Light;
+		font-size: 16px;
+		color: #20ac76;
 	}
 
 	.mobile-chckout-btn{
 		width: 30%;
 		height: 100%;
+		background-color: #20ac76;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-align: center;
 	}
 
-	.mobile-cart-icon-container{
-		color: #20ac76;
+	.mobile-chckout-btn a{
+		text-decoration: none;
+		font-family: Light;
+		font-size: 16px;
+		color: #fff;
 		
-
 	}
 
+	.mobile-cart-icon-container span{
+		color: #20ac76;
+		font-size: 20px;
+		display: inline-block;
+	}
+
+	.mobile-cart-icon-container span p{
+		font-family: Light;
+		margin: 0 0 0px;
+		font-size: 16px;
+		color: #20ac76;
+	}
+
+	.mobile-cart-icon-container .mobile-item-qty{
+		margin-left: 3px;
+	}*/
+
+	.mobile-cart-content{
+		position: relative;
+		height: 100%;
+		width: 100%;
+		background-color: #fff;
+	}
+
+	.mobile-cart-content-header{
+		position: fixed;
+		width: 100%;
+		top: 0;
+		left: 0;
+		background-color: #ed8d29; 
+		z-index: 50;
+		transition: background-color .2s ease-in-out;
+		display: block;
+	}
+
+	.mobile-cart-content-header a{
+		text-decoration: none;
+		font-size: 28px;
+	    color: #ffffff;
+	    font-family: Light; 
+	    padding-top: 7px;
+		padding-bottom: 11px;
+	}
+
+	.mobile-cart-content-header a p{
+	font-family: Light;
+    font-size: 22px;
+    color: white;
+    display: inline;
+    margin: 0 0 0px;
+    text-decoration: none;
+	}
+
+	.mobile-cart-content-header a span{
+		color: white;
+	    font-size: 16px;
+	    padding-right: 5px;
+	}
+
+	.mobile-cart-content-header-title{
+		padding-left: 8px;
+		padding-top: 7px;
+		padding-bottom: 11px;
+	}
+
+	.mobile-cart-content-wrapper .mobile-canteen-cart{
+		margin-top: 51px;
+		min-height: 0px;
+		height:auto;
+		
+	}
+
+	.menu-list-headers-body-wrapper{
+		display: none;
+	}
+
+	.canteen-body-container, .menu-list,.menu-item-container-wrapper{
+		width: 100%;
+	}
+
+
+	.canteen-cart{
+		margin-top: 51px;
+		min-height: 0px;
+		height:auto;
+		
+	}
+
+	.cart-content{
+		/*position: absolute;
+		height: 100%;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+		background-color: #fff;
+		display: none;*/
+		display: none;
+	    position: fixed;
+	    bottom: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background-color: #fff;
+	    overflow-y: auto;
+	}
+
+	.cart-header-container{
+		display: none;
+	}
 }

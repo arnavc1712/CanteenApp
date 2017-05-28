@@ -13,6 +13,8 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/smoke.css')}}">
+
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script src="https://use.fontawesome.com/3d614a9e46.js"></script>
 	<script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
@@ -45,8 +47,14 @@
 
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav navbar-right">
+                        	{% if not current_user.is_authenticated %}
                             <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#SignUpModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button></a></li>
                             <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#LoginModal"><span class="glyphicon glyphicon-log-in"></span> Login</button></a></li>
+                            {% endif %}
+
+                            {% if current_user.is_authenticated %}
+                            <li><a href="#"><button class="btn btn-default" onClick="window.location='/logout'"><span class="glyphicon glyphicon-user"></span> Logout</button></a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -84,8 +92,14 @@
 			        <ul>
 			          <li><a href="">Brand</a></li>
 			          <li><a href="#">Home</a></li>
+			          {% if not current_user.is_authenticated %}
 			          <li><a href="#" data-toggle="modal" data-target="#LoginModal">Login</a></li>
 			          <li><a href="#" data-toggle="modal" data-target="#SignUpModal">Sign up</a></li>
+			          {% endif %}
+
+			          {% if current_user.is_authenticated %}
+			          <li><a href="#" onClick="window.location='/logout'">Logout</a></li>
+			          {% endif %}
 			        </ul>
 			      </div>
 			    </div>
@@ -118,7 +132,7 @@
 
 								<div class="form-group">
 									<label for="sap_id" class="control-label"><p>SAP ID:</p></label>
-									<input name='sap_id' class="form-control" id="sap_id" placeholder="SAP ID" type="number" required>
+									<input name='sap_id' class="form-control" id="sap_id" placeholder="SAP ID" type="number" data-smk-pattern="(700)[0-9]{8}" data-smk-msg="Enter valid SAP Id" required>
 								</div>
 
 								<div class="form-group">
@@ -128,12 +142,12 @@
 
 								<div class="form-group">
 									<label for="tel_no" class="control-label"><p>Phone Number:</p></label>
-									<input name='tel_no' class="form-control" id="tel_no" placeholder="Phone Number" type="number" required>
+									<input name='tel_no' class="form-control" id="tel_no" placeholder="Phone Number" type="tel" required>
 								</div>
 
 								<div class="form-group">
 								  <label for="password" class="control-label"><p>Password:</p></label>
-								  <input name='password' class="form-control" id="password" placeholder="Password" type="password" required>
+								  <input name='password' class="form-control" id="password" placeholder="Password" data-smk-strongPass="strong" data-smk-msg="Password should be atleast 6 characters, having atleast 1 uppercase, 1 lowercase and 1 number" type="password" required>
 								</div>
 
 								<div class="submit-btn-container">
@@ -167,7 +181,7 @@
 
 								<div class="form-group">
 									<label for="sap_id" class="control-label"><p>SAP ID:</p></label>
-									<input name='sap_id' class="form-control" id="login_sap_id" placeholder="SAP ID" type="number" required>
+									<input name='sap_id' class="form-control" id="login_sap_id" placeholder="SAP ID" type="number"  data-smk-pattern="(700)[0-9]{8}" data-smk-msg="Enter valid SAP Id" required>
 								</div>
 
 
