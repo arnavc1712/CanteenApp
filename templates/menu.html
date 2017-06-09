@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+ {% extends "base.html" %}
 {% block head %}{{ super() }}<style type="text/css"> .bg-image{height:64px;overflow:hidden}</style> {% endblock %}
 {% block title %}Menu{% endblock %}
 
@@ -746,12 +746,14 @@
 		<!-- ADD TO CART -->
 		<div class="canteen-cart-container col-md-4">
 
+		
 			<div class="mobile-cart-container">
 				<div class="mobile-cart-icon-container">
 					<span class="fa fa-shopping-basket" aria-hidden="true"></span>
 					<span class="mobile-item-qty"><p>1</p></span>
-				</div><div class="mobile-item-price"><p>Rs 125</p></div><div class="mobile-chckout-btn"><a class="mobile-checkout">Checkout</a></div>	
+				</div><div class="mobile-item-price"><p>Rs 125</p></div><div class="mobile-chckout-btn"><a class="mobile-checkout" href="/checkout">Checkout</a></div>	
 			</div>
+		
 
 
 			<div class="cart-content">
@@ -770,13 +772,32 @@
 						<hr>
 					</div>
 
+					{% if not cust_selections %}
 					<div class="cart-icon-container">
 						<span class="fa fa-shopping-cart" aria-hidden="true"></span>
 					</div>
+					{% endif %}
 					<div class="cart-products">
 						<table id="cartItemTable">
 							<tbody>
-								
+								{% if cust_selections %}
+									{% for item in cust_selections %}
+										<tr class="product-item">
+									<td class="item-qty">
+									<div class="item-qty-controls">
+									<button type="button" class="btn item-qty-amount-control btn-increment">+</button>
+									<span class="item-qty-wrapper text-center">{{item["item-qty"]}}</span>
+
+									<button type="button" class="btn item-qty-amount-control btn-decrement">-</button>
+									</div>
+									</td>
+									<td id="item-name"><p>{{item["item-name"]}}</p></td>
+									<td id="item-price"><p>Rs {{item["item-price"]}}</p><button type="button" class="rmv-btn"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
+									</tr>
+									{% endfor %}
+								{% endif %}
+
+
 							</tbody>
 						</table>
 
@@ -796,6 +817,10 @@
 								</tr>
 							</tbody>
 						</table>
+					</div>
+
+					<div class="cart-checkout">
+						<div class="cart-chckout-btn"><a class="cart-checkout">Checkout</a></div>
 					</div>
 
 				</div>

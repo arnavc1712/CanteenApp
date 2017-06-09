@@ -1,0 +1,62 @@
+ {% extends "base.html" %}
+{% block head %}{{ super() }} <style type="text/css"> .bg-image{height:64px;overflow:hidden}</style>{% endblock %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+
+
+<div class="checkout-canteen-cart">
+					<div class="checkout-cart-header-container">
+						<div class="checkout-cart-header">
+							<p class="text-uppercase">Your order</p>
+						</div>
+						<hr>
+					</div>
+					
+				
+					<div class="checkout-cart-products">
+						<table id="checkoutCartItemTable">
+							<tbody>
+								{% for items in cust_selections %}
+									<tr class="checkout-product-item">
+									<td class="checkout-item-qty">
+									<div class="checkout-item-qty-controls">
+										<span class="checkout-item-qty-wrapper text-center"> {{ items["item-qty"] }}</span>
+									</div>
+									</td>
+									<td id="checkout-item-name"><p>{{ items["item-name"] }}</p></td>
+									<td id="checkout-item-price"><p>{{ items["item-price"] }}</p></td>
+									</tr>
+								{% endfor %}
+
+
+							</tbody>
+						</table>
+
+					</div>
+
+					<div class="checkout-cart-summary">
+						<table id="checkoutCartSummaryTable">
+							<tbody>
+								<tr class="checkout-subtotal">
+									<td class="title"><p>Subtotal</p></td>
+									<td class="price"><p>Rs {{ total_amt }}</p></td>
+								</tr>
+								<tr><td><br></td></tr>
+								<tr class="checkout-total">
+									<td class="total-title"><p>Total</p></td>
+									<td class="total-amt"><p>Rs {{ total_amt }}</p></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="final-cart-checkout">
+						<div class="final-cart-chckout-btn"><a class="final-cart-checkout">Checkout</a></div>
+					</div>
+
+</div>
+
+
+{% endblock %}
