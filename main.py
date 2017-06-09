@@ -34,7 +34,7 @@ mail = Mail(app)
 lm = LoginManager()
 lm.init_app(app)
 
-
+SESSION={}
 
 class User():
 
@@ -79,6 +79,8 @@ def login():
         if user and User.validate_login(user['password'],password):
             user_obj = User(user['sap_id'])
             login_user(user_obj)
+            SESSION["username"]=user["first_name"]+ " " + user["last_name"]
+            print SESSION["username"]
             flash("Logged in successfully", category='success')
             return jsonify("True")
             # return redirect(request.args.get("next") or url_for("index"))
@@ -90,6 +92,7 @@ def login():
 @app.route('/logout')
 def logout():  
     logout_user()
+    SESSION.pop("username",None);
     return redirect(url_for('index'))
 
 @app.route('/')
@@ -154,11 +157,41 @@ def add_customers():
 def register():
 	return render_template('register.html')
 
-@app.route('/menu')
+@app.route('/menu',methods=['POST','GET'])
 def show_menu():
-    if current_user.is_authenticated:
-      print "LOGGED IN BITCHES"
-    return render_template('menu.html')
+    if request.method=="GET":
+      if current_user.is_authenticated:
+        print "LOGGED IN BITCHES"
+      if "cust_selections" in SESSION and "total_amt" in SESSION:
+        return render_template('menu.html',cust_selections=SESSION["cust_selections"],
+          total_amt=SESSION["total_amt"])
+      else:
+        print "NAY"
+        
+      return render_template('menu.html')
+
+    
+    if request.method=="POST":
+      cust_selections=request.json["cust_selections"]
+      total_amt=request.json["total_amt"]
+      print "Total amt iss "+ total_amt
+      SESSION["cust_selections"]=cust_selections
+      SESSION["total_amt"]=total_amt
+    
+      return jsonify("SUCCESS BITCHES")
+    
+    
+
+@app.route('/checkout',methods=['POST','GET'])
+def checkout_screen():
+  cust_selections={}
+  if request.method=="POST":
+    cust_selections=request.json["cust_selections"]
+    total_amt=request.json["total_amt"]
+    return "DONE"
+
+  if request.method=="GET":
+    return render_template("checkout.html",cust_selections=SESSION["cust_selections"],total_amt=SESSION["total_amt"])
 
 @app.route('/hello/',methods=['GET', 'POST'])
 def hello(name='Arnav'):
