@@ -680,12 +680,162 @@ td button{
 	}
 
 
-	.form_err_msg{
+	.cart-checkout{
+		padding-top: 10px;
+	}
+	.cart-chckout-btn{
+		width: 100%;
+		height: 100%;
+		background-color: #20ac76;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	.cart-chckout-btn a{
+		text-decoration: none;
+		font-family: Light;
+		font-size: 16px;
+		color: #fff;
+		
+	}
+
+
+	.form_err_msg{ 
 		color: red;
 		margin: 0 auto;
 		text-align: center;
 		font-size: 16px;
 	}
+
+	.cart-chckout-btn{
+		cursor: pointer;
+	}
+
+	.checkout-canteen-cart{
+		min-height: 20px;
+		background-color: #ffffff;
+		margin-top: 20px;
+
+	}
+
+	.checkout-cart-header{
+	text-align: center;
+	}
+
+	.checkout-cart-header p{
+	margin: 0 0 0px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	
+	font-size: 16px;
+	}
+
+	.checkout-product-item td{
+		height: 65px;
+		vertical-align: middle;
+		padding: 2px 0;
+		padding-left: 10px;
+	}		
+
+	.checkout-item-qty-wrapper{
+		display: block;
+	    color: #20ac76;
+	    padding-top: 1.5px;
+	    padding-left: 5px;
+	    padding-right: 5px;
+	    padding-bottom: 1.5px;
+	    text-align: center;
+	    font-family: Light;
+	    font-size: 14px;
+	}
+
+
+	#checkout-item-price{
+		text-align: right;
+	    white-space: nowrap;
+	    padding-left: 0px;
+	    padding-right: 5px;
+	    
+	}
+
+	#checkout-item-price p{
+		font-family: Light;
+		font-size: 12px;
+	}
+
+	#checkout-item-price span{
+		
+		font-size: 20px;
+		color: #20ac76;
+	}
+
+	.checkout-product-item{
+	margin-bottom: 20px;
+	border-bottom: 1px solid #eeeeee;
+	vertical-align: middle;
+	}
+
+	.checkout-product-item td p{
+		margin: 0 0 0px;
+	}
+
+	#checkoutCartItemTable{
+		width: 100%;
+	}
+
+	#checkoutCartItemTable tbody{
+		display: block;
+		max-height: 200px;       
+	    overflow-y: auto;
+	    overflow-x: hidden;   
+	    padding-right: 5px;
+	}
+
+	#checkout-item-name{
+		width: 100%;
+	}
+
+	#checkout-item-name p{
+		font-family: Light;
+		font-size: 14px;
+	}
+
+	#checkoutCartSummaryTable tr p{
+	margin: 0 0 0px;
+	font-family: Light;
+	}
+
+	#checkoutCartSummaryTable{
+		width: 100%;
+	}
+
+	#checkoutCartSummaryTable td{
+		padding-left: 10px;
+		padding-right: 30px;
+	}	
+
+	.final-cart-checkout{
+		padding-top: 10px;
+	}
+	.final-cart-chckout-btn{
+		width: 100%;
+		height: 100%;
+		background-color: #20ac76;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	.final-cart-chckout-btn a{
+		text-decoration: none;
+		font-family: Light;
+		font-size: 16px;
+		color: #fff;
+		
+	}
+
+
 
 @media only screen and (max-width: 900px) {
 	.img-container .icon{
@@ -968,6 +1118,10 @@ td button{
 	}
 
 	.cart-header-container{
+		display: none;
+	}
+
+	.cart-checkout{
 		display: none;
 	}
 }

@@ -31,9 +31,34 @@ if (window.location.pathname == '/menu'){
 
 		changeMainNav();
 
+
+		qtyValChangers();
+
+		if($(window).width()<=900){
+			if($("#cartItemTable>tbody>tr").length==0){
+				$(".mobile-cart-container").css("display","none");
+			}
+
+			else{
+				$(".mobile-cart-container").css("display","block");
+			}
+		}
+
+		$(".rmv-btn").unbind().click(function(){
+				removeItem(this);
+		})
+
+		updateBillValue(2);
+
 	
 
 }
+
+
+
+
+
+
 
 $(".menu-list-headers-container").sticky({topSpacing:0});
 $(".canteen-cart").sticky({topSpacing:0});
@@ -183,6 +208,29 @@ return false;
 
 
 
+$(".cart-chckout-btn ").click(function(){
+	cust_selections=[]
+	cust_selections,total_amt=updateUserSelection();
+	data={};
+	data["cust_selections"]=cust_selections;
+	data["total_amt"]=total_amt;
+
+	$.ajax({
+		url:"/checkout",
+		type:"POST",
+		data: JSON.stringify(data,null, '\t'),
+		contentType: 'application/json; charset=UTF-8',
+		success:function(message){
+			window.location.href = "/checkout";
+		}
+
+	})
+	
+})
+
+
+
+
 })
 
 function addToCart(item_name){
@@ -202,7 +250,7 @@ function addItem(){
 									</div>\
 									</td>\
 									<td id="item-name"><p>'+item_title+'</p></td>\
-									<td id="item-price"><p>Rs 128</p><button type="button" class="rmv-btn"><span class="glyphicon glyphicon-remove-circle"></span></button></td>\
+									<td id="item-price"><p>Rs 228</p><button type="button" class="rmv-btn"><span class="glyphicon glyphicon-remove-circle"></span></button></td>\
 								</tr>';
 
 	return title_object
@@ -212,7 +260,7 @@ function removeItem(rmvBtnArgs){
 	
 	$(rmvBtnArgs).parents("tr").remove();
 	if($("#cartItemTable>tbody>tr").length==0){
-		$(".canteen-cart").append(addCartIcon());
+		$(".canteen-cart div:eq(0)").after(addCartIcon());
 		$(".mobile-cart-container").css("display","none");
 
 	}
@@ -302,6 +350,27 @@ function updateBillValue(addValue,addBtn){
 	$(".mobile-item-price p").text('Rs '+ temp);
 	$(".mobile-item-qty p").text(total_qty);
 
+	//Storing SESSION INFORMATION
+	cust_selections=[]
+	cust_selections,total_amt=updateUserSelection();
+	console.log("Total price BLAH is "+ total_amt)
+	data={}
+	data["cust_selections"]=cust_selections;
+	data["total_amt"]=total_amt;
+
+	$.ajax({
+
+		url:"/menu",
+		type:"POST",
+		data: JSON.stringify(data,null, '\t'),
+		contentType: 'application/json; charset=UTF-8',
+		success:function(message){
+			console.log(message);
+		}
+		
+	})
+
+
 }
 
 
@@ -382,3 +451,18 @@ function cartContentToggler(){
 }
 
 
+
+function updateUserSelection(){
+cust_selections=[]
+$("#cartItemTable tbody .product-item").each(function(){
+	single_selection={}
+	single_selection["item-qty"]=$(this).find(".item-qty .item-qty-wrapper").text();
+	single_selection["item-name"]=$(this).find("#item-name").text();
+	single_selection["item-price"]=$(this).find("#item-price").text().split(" ")[1];
+	cust_selections.push(single_selection);
+	
+})
+var total_price=$(".total .total-amt").text().split(" ")[1]
+
+return cust_selections,total_price
+}
