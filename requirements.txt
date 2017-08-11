@@ -1,0 +1,6 @@
+flask
+
+PyMongo
+flask_pymongo
+flask_mail
+flask_login

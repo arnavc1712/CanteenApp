@@ -6,6 +6,8 @@ from flask import jsonify
 from flask_mail import Mail
 from flask_mail import Message
 import hashlib
+import os
+from flask import abort
   
 from flask import request, redirect, render_template, url_for, flash  
 from flask_login import login_user, logout_user,LoginManager
@@ -25,7 +27,7 @@ mongo = PyMongo(app)
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'arnav171296@gmail.com'
-app.config['MAIL_PASSWORD'] = '*****'
+app.config['MAIL_PASSWORD'] = '1712nanu'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
@@ -33,6 +35,12 @@ mail = Mail(app)
 
 lm = LoginManager()
 lm.init_app(app)
+
+APP=os.path.dirname(os.path.abspath(__file__))
+target=os.path.join(APP,'images/')
+
+if not os.path.isdir(target):
+  os.mkdir(targetm)
 
 SESSION={}
 
@@ -42,7 +50,8 @@ class User():
         self.sap_id = sap_id
 
     def is_authenticated(self):
-        return True
+        if SESSION['username']:
+          return True
 
     def is_active(self):
         return True
@@ -97,7 +106,30 @@ def logout():
 
 @app.route('/')
 def index():
+    # print SESSION
+    # print current_user.get_id()
+    if current_user.is_authenticated:
+        print "LOGGED IN BITCHES 1"
+
     return render_template('home.html') 
+
+counter=0
+@app.route('/<event_name>')
+def load_event(event_name):
+  global counter
+  print counter
+  
+  if counter==2:
+    mongo.db.events.remove({"name":event_name})
+  event=mongo.db.events.find_one({"name":event_name})
+
+
+  if event:
+    counter+=1
+    return '<h1> Welcome to '+event["name"]+'Description:'+ event["description"]+'</h1>'
+
+  else:
+    abort(404)
 
 
 
@@ -135,15 +167,17 @@ def add_customers():
   cust_obj=customers.find({"sap_id":sap_id}).count();
   print cust_obj;
   if cust_obj==0:
-
+    print "you are inside"
     cust_id = customers.insert({'first_name':first_name, 'last_name': last_name,'sap_id':sap_id,'email':email,
       'tel_no':tel_no,'password':password})
     new_cust = customers.find_one({'_id': cust_id })
     output = {'First Name' : new_cust['first_name'], 'Last Name' : new_cust['last_name']}
     print "HELOOOOO"
-    # msg = Message("Welcome to the Canteen App, "+first_name,sender="arnav171296@gmail.com",recipients=[email])
-    # msg.body="Whastup "+first_name
-    # mail.send(msg)
+    msg = Message("Welcome to the Canteen App, "+first_name,sender="arnav171296@gmail.com",recipients=[email])
+    print "SUPP"
+    print email
+    msg.body="Whastup "+first_name
+    mail.send(msg)
     return jsonify({'result' : output})
 
   else:
