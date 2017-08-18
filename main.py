@@ -36,11 +36,11 @@ mail = Mail(app)
 lm = LoginManager()
 lm.init_app(app)
 
-APP=os.path.dirname(os.path.abspath(__file__))
-target=os.path.join(APP,'images/')
+# APP=os.path.dirname(os.path.abspath(__file__))
+# target=os.path.join(APP,'images/')
 
-if not os.path.isdir(target):
-  os.mkdir(targetm)
+# if not os.path.isdir(target):
+#   os.mkdir(targetm)
 
 SESSION={}
 
@@ -113,23 +113,23 @@ def index():
 
     return render_template('home.html') 
 
-counter=0
-@app.route('/<event_name>')
-def load_event(event_name):
-  global counter
-  print counter
+# counter=0
+# @app.route('/<event_name>')
+# def load_event(event_name):
+#   global counter
+#   print counter
   
-  if counter==2:
-    mongo.db.events.remove({"name":event_name})
-  event=mongo.db.events.find_one({"name":event_name})
+#   if counter==2:
+#     mongo.db.events.remove({"name":event_name})
+#   event=mongo.db.events.find_one({"name":event_name})
 
 
-  if event:
-    counter+=1
-    return '<h1> Welcome to '+event["name"]+'Description:'+ event["description"]+'</h1>'
+#   if event:
+#     counter+=1
+#     return '<h1> Welcome to '+event["name"]+'Description:'+ event["description"]+'</h1>'
 
-  else:
-    abort(404)
+#   else:
+#     abort(404)
 
 
 
@@ -184,7 +184,22 @@ def add_customers():
     return jsonify("False")
 
   
- 
+
+@app.route('/updateMenu',methods=['POST'])
+def postMenu():
+  if request.method=="POST":
+    menu=mongo.db.menu
+    food_item=request.json["food_item"]
+    price=request.json["price"]
+    description=request.json["description"]
+    
+    if menu.find({"food_item":food_item}).count()==0:
+      menu.insert({"food_item":food_item,"price":price,"description":description})
+      return "Item added "+str(request.json)
+    else:
+      return "Item already exists"
+
+
   
 
 @app.route('/register')
