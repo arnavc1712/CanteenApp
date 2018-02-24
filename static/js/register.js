@@ -10,6 +10,44 @@ $(document).load($(window).bind("resize", function(){
 		$(".canteen-cart").sticky({topSpacing:0});
 	}
 }));
+
+
+var substringMatcher = function(strs) {
+  return function findMatches(q, cb) {
+    var matches, substringRegex;
+
+    // an array that will be populated with substring matches
+    matches = [];
+
+    // regex used to determine if a string contains the substring `q`
+    substrRegex = new RegExp(q, 'i');
+
+    // iterate through the pool of strings and for any string that
+    // contains the substring `q`, add it to the `matches` array
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push(str);
+      }
+    });
+
+    cb(matches);
+  };
+};
+
+// var states = ['Pizza','Garlic Bread','Paneer Chilli','Paneer Makhani','Twsited Potato','Triple Rice'
+// ];
+
+// $('.typeahead').typeahead({
+//   hint: true,
+//   highlight: true,
+//   minLength: 1
+// },
+// {
+//   name: 'states',
+//   source: substringMatcher(states)
+// });
+
+
 if (window.location.pathname == '/menu'){
 	// if($(window).width()<=600)
 	// {$("div.bg-image").css({"height":"64px","overflow":"hidden"});}

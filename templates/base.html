@@ -20,6 +20,7 @@
 	<script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
 	<script src="{{url_for('static',filename='js/jquery.sticky.js')}}"></script>
 	<script src="{{url_for('static',filename='js/smooth-scroll.js')}}"></script>
+	<script src="{{url_for('static',filename='js/typeahead.js')}}"></script>
 
 
 
@@ -47,12 +48,12 @@
 
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav navbar-right">
-                        	{% if not current_user.is_authenticated %}
+                        	{% if "username" not in session %}
                             <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#SignUpModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button></a></li>
                             <li><a href="#"><button class="btn btn-default" data-toggle="modal" data-target="#LoginModal"><span class="glyphicon glyphicon-log-in"></span> Login</button></a></li>
                             {% endif %}
 
-                            {% if current_user.is_authenticated %}
+                            {% if "username" in session %}
                             <li><a href="#"><button class="btn btn-default" onClick="window.location='/logout'"><span class="glyphicon glyphicon-user"></span> Logout</button></a></li>
                             {% endif %}
                         </ul>
