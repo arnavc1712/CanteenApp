@@ -173,7 +173,7 @@ def add_customers():
   sap_id=request.json['sap_id']
   email=request.json['email']
   tel_no=request.json['tel_no']
-  password=hashlib.md5(request.json['password']).hexdigest();
+  password=hashlib.md5(request.json['password'].encode('utf-8')).hexdigest();
 
   cust_obj=customers.find({"sap_id":sap_id}).count();
   print(cust_obj)
