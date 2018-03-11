@@ -20,7 +20,8 @@ from flask_login import current_user
 application = Flask(__name__)
 
 application.config['MONGO_DBNAME'] = 'arnavdb'
-application.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mycustomers'
+# application.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mycustomers'
+application.config['MONGO_URI'] = 'mongodb://arnavc:1712nanu@ds145359.mlab.com:45359/arnavdb'
 
 application.secret_key = 'some_secret'
 mongo = PyMongo(application)
@@ -66,7 +67,10 @@ class User():
 
     @staticmethod
     def validate_login(password_hash, password):
+        print password_hash
+        print hashlib.md5(password).hexdigest()
         if password_hash==hashlib.md5(password).hexdigest():
+          print "Validated"
           return True
         
         return False
@@ -88,14 +92,15 @@ def login():
     if request.method == 'POST':
         user = mongo.db.customers.find_one({"sap_id": sap_id})
         if user and User.validate_login(user['password'],password):
+            print "Validated 2"
             user_obj = User(user['sap_id'])
             login_user(user_obj)
             session["username"]=user["first_name"]+ " " + user["last_name"]
             print session["username"]
             flash("Logged in successfully", category='success')
-            # return jsonify("True")
+            return jsonify("True")
 
-            return redirect(url_for('show_menu'))
+            # return render_template('menu.html',session=session)
         flash("Wrong username or password", category='error')
     return jsonify('False')
     # return render_template('home.html')
@@ -223,8 +228,10 @@ def register():
 
 @application.route('/menu',methods=['POST','GET'])
 def show_menu():
-    # print request.method
+    print request.method
+    
     if request.method=="GET":
+      print "IN GET"
       if current_user.is_authenticated:
         print "LOGGED IN BITCHES"
       if "cust_selections" in session and "total_amt" in session:
@@ -237,6 +244,7 @@ def show_menu():
 
     
     if request.method=="POST":
+      print "IN POST"
       cust_selections=request.json["cust_selections"]
       total_amt=request.json["total_amt"]
       print "Total amt iss "+ total_amt

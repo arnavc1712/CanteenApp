@@ -227,7 +227,7 @@ $("#login-submitbtn").click(function(){
       				text: 'Validate!',
       				type: 'success'
     				});
-					location.reload();
+					window.location.href = "/menu";
 				}
 				else{
 					if($("#LoginModal .register-form .form_err_msg").length!=1){
