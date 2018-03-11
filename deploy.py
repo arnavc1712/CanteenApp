@@ -69,7 +69,7 @@ class User():
     def validate_login(password_hash, password):
         print(password_hash)
         print(hashlib.md5(password).hexdigest())
-        if password_hash==hashlib.md5(password).hexdigest():
+        if password_hash==hashlib.md5(password.encode('utf-8')).hexdigest():
           print("Validated")
           return True
         
