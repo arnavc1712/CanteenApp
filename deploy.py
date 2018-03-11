@@ -176,7 +176,7 @@ def add_customers():
   password=hashlib.md5(request.json['password']).hexdigest();
 
   cust_obj=customers.find({"sap_id":sap_id}).count();
-  print cust_obj;
+  print(cust_obj)
   if cust_obj==0:
     # print "you are inside"
     cust_id = customers.insert({'first_name':first_name, 'last_name': last_name,'sap_id':sap_id,'email':email,
