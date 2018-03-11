@@ -14,32 +14,32 @@ from flask_login import login_user, logout_user,LoginManager
 from flask_login import current_user
 # from .forms import LoginForm  
 # from .user import User
-# from application import lm
+# from app import lm
 
 
-application = Flask(__name__)
+app = Flask(__name__)
 
-application.config['MONGO_DBNAME'] = 'arnavdb'
-# application.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mycustomers'
-application.config['MONGO_URI'] = 'mongodb://arnavc:1712nanu@ds145359.mlab.com:45359/arnavdb'
+app.config['MONGO_DBNAME'] = 'arnavdb'
+# app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mycustomers'
+app.config['MONGO_URI'] = 'mongodb://arnavc:1712nanu@ds145359.mlab.com:45359/arnavdb'
 
-application.secret_key = 'some_secret'
-mongo = PyMongo(application)
+app.secret_key = 'some_secret'
+mongo = PyMongo(app)
 
-application.config['MAIL_SERVER']='smtp.gmail.com'
-application.config['MAIL_PORT'] = 465
-application.config['MAIL_USERNAME'] = 'arnav171296@gmail.com'
-application.config['MAIL_PASSWORD'] = '1712@Nanu'
-application.config['MAIL_USE_TLS'] = False
-application.config['MAIL_USE_SSL'] = True
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'arnav171296@gmail.com'
+app.config['MAIL_PASSWORD'] = '1712@Nanu'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
-mail = Mail(application)
+mail = Mail(app)
 
 lm = LoginManager()
-lm.init_app(application)
+lm.init_app(app)
 
-# application=os.path.dirname(os.path.abspath(__file__))
-# target=os.path.join(application,'images/')
+# app=os.path.dirname(os.path.abspath(__file__))
+# target=os.path.join(app,'images/')
 
 # if not os.path.isdir(target):
 #   os.mkdir(targetm)
@@ -84,7 +84,7 @@ def load_user(sap_id):
     return User(u['sap_id'])
 
 
-@application.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():  
     print request.json
     sap_id=request.json['sap_id']
@@ -106,7 +106,7 @@ def login():
     # return render_template('home.html')
 
 
-@application.route('/logout')
+@app.route('/logout')
 def logout():  
     logout_user()
     session.clear()
@@ -115,7 +115,7 @@ def logout():
     #   session.pop(_)
     return redirect(url_for('index'))
 
-@application.route('/')
+@app.route('/')
 def index():
     # print session
     # print current_user.get_id()
@@ -125,7 +125,7 @@ def index():
     return render_template('home.html',session=session) 
 
 # counter=0
-# @application.route('/<event_name>')
+# @app.route('/<event_name>')
 # def load_event(event_name):
 #   global counter
 #   print counter
@@ -144,7 +144,7 @@ def index():
 
 
 
-@application.route('/test',methods=['GET'])
+@app.route('/test',methods=['GET'])
 def get_customers():
 	customers=mongo.db.customers
 	output=[]
@@ -153,7 +153,7 @@ def get_customers():
 	# console.log(output)	
 	return jsonify({'result' : output})
 
-@application.route('/test/<name>', methods=['GET'])
+@app.route('/test/<name>', methods=['GET'])
 def get_one_star(name):
   customers = mongo.db.customers
   cust = customers.find_one({'first_name' :name})
@@ -164,7 +164,7 @@ def get_one_star(name):
   return jsonify({'result' : output})
 
 
-@application.route('/test',methods=['POST'])
+@app.route('/test',methods=['POST'])
 def add_customers():
   print "Add customer"
   customers = mongo.db.customers
@@ -184,7 +184,7 @@ def add_customers():
     new_cust = customers.find_one({'_id': cust_id })
     output = {'First Name' : new_cust['first_name'], 'Last Name' : new_cust['last_name']}
     # print "HELOOOOO"
-    msg = Message("Welcome to the Canteen application, "+first_name,sender="arnav171296@gmail.com",recipients=[email])
+    msg = Message("Welcome to the Canteen app, "+first_name,sender="arnav171296@gmail.com",recipients=[email])
     # print "SUPP"
     # print email
     msg.body="Whastup "+first_name
@@ -197,7 +197,7 @@ def add_customers():
 
   
 
-@application.route('/updateMenu',methods=['POST'])
+@app.route('/updateMenu',methods=['POST'])
 def postMenu():
   if request.method=="POST":
     menu=mongo.db.menu
@@ -213,7 +213,7 @@ def postMenu():
 
 
 
-@application.route('/getMenu',methods=['GET'])
+@app.route('/getMenu',methods=['GET'])
 def getMenuItems():
   if request.method=="GET":
     menu_items=mongo.db.menu
@@ -222,11 +222,11 @@ def getMenuItems():
 
   
 
-@application.route('/register')
+@app.route('/register')
 def register():
 	return render_template('register.html')
 
-@application.route('/menu',methods=['POST','GET'])
+@app.route('/menu',methods=['POST','GET'])
 def show_menu():
     print request.method
     
@@ -255,7 +255,7 @@ def show_menu():
     
     
 
-@application.route('/checkout',methods=['POST','GET'])
+@app.route('/checkout',methods=['POST','GET'])
 def checkout_screen():
   cust_selections={}
   if request.method=="POST":
@@ -266,15 +266,15 @@ def checkout_screen():
   if request.method=="GET":
     return render_template("checkout.html",cust_selections=session["cust_selections"],total_amt=session["total_amt"])
 
-@application.route('/hello/',methods=['GET', 'POST'])
+@app.route('/hello/',methods=['GET', 'POST'])
 def hello(name='Arnav'):
 	if request.method == 'GET':
 		flash("Whastup niggas")
 		return 'Hello, %s' % name
 
-with application.test_request_context():
+with app.test_request_context():
 	print url_for('hello',name='Arnav')
 
 
 if __name__== "__main__":
-	application.run(debug=True)
+	app.run(debug=True)
