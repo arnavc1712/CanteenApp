@@ -67,10 +67,10 @@ class User():
 
     @staticmethod
     def validate_login(password_hash, password):
-        print password_hash
-        print hashlib.md5(password).hexdigest()
+        print(password_hash)
+        print(hashlib.md5(password).hexdigest())
         if password_hash==hashlib.md5(password).hexdigest():
-          print "Validated"
+          print("Validated")
           return True
         
         return False
@@ -86,17 +86,17 @@ def load_user(sap_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():  
-    print request.json
+    print(request.json)
     sap_id=request.json['sap_id']
     password=request.json["password"]
     if request.method == 'POST':
         user = mongo.db.customers.find_one({"sap_id": sap_id})
         if user and User.validate_login(user['password'],password):
-            print "Validated 2"
+            print("Validated 2")
             user_obj = User(user['sap_id'])
             login_user(user_obj)
             session["username"]=user["first_name"]+ " " + user["last_name"]
-            print session["username"]
+            print(session["username"])
             flash("Logged in successfully", category='success')
             return jsonify("True")
 
@@ -120,7 +120,7 @@ def index():
     # print session
     # print current_user.get_id()
     if "username" in session:
-        print "You are logged in as {}".format(session["username"])
+        print("You are logged in as {}".format(session["username"]))
 
     return render_template('home.html',session=session) 
 
@@ -166,7 +166,7 @@ def get_one_star(name):
 
 @app.route('/test',methods=['POST'])
 def add_customers():
-  print "Add customer"
+  print("Add customer")
   customers = mongo.db.customers
   first_name = request.json['first_name']
   last_name = request.json['last_name']
@@ -228,26 +228,26 @@ def register():
 
 @app.route('/menu',methods=['POST','GET'])
 def show_menu():
-    print request.method
+    print(request.method)
     
     if request.method=="GET":
-      print "IN GET"
+      print("IN GET")
       if current_user.is_authenticated:
-        print "LOGGED IN BITCHES"
+        print("LOGGED IN BITCHES")
       if "cust_selections" in session and "total_amt" in session:
         return render_template('menu.html',cust_selections=session["cust_selections"],
           total_amt=session["total_amt"])
       else:
-        print "NAY"
+        print("NAY")
         
       return render_template('menu.html',session=session)
 
     
     if request.method=="POST":
-      print "IN POST"
+      print("IN POST")
       cust_selections=request.json["cust_selections"]
       total_amt=request.json["total_amt"]
-      print "Total amt iss "+ total_amt
+      print("Total amt iss "+ total_amt)
       session["cust_selections"]=cust_selections
       session["total_amt"]=total_amt
     
@@ -273,7 +273,7 @@ def hello(name='Arnav'):
 		return 'Hello, %s' % name
 
 with app.test_request_context():
-	print url_for('hello',name='Arnav')
+	print(url_for('hello',name='Arnav'))
 
 
 if __name__== "__main__":
