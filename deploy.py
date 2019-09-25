@@ -15,21 +15,24 @@ from flask_login import current_user
 # from .forms import LoginForm  
 # from .user import User
 # from app import lm
-
+import json
+ 
+with open("./conf.json", "r") as read_file:
+  conf = json.load(read_file)
 
 app = Flask(__name__)
 
 app.config['MONGO_DBNAME'] = 'arnavdb'
 # app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mycustomers'
-app.config['MONGO_URI'] = 'mongodb://arnavc:1712nanu@ds145359.mlab.com:45359/arnavdb'
+app.config['MONGO_URI'] = conf["mlab"]["mongouri"]
 
 app.secret_key = 'some_secret'
 mongo = PyMongo(app)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'arnav171296@gmail.com'
-app.config['MAIL_PASSWORD'] = '1712@Nanu'
+app.config['MAIL_USERNAME'] = conf["email"]["id"]
+app.config['MAIL_PASSWORD'] = conf["email"]["pass"]
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
@@ -187,7 +190,8 @@ def add_customers():
     msg = Message("Welcome to the Canteen app, "+first_name,sender="arnav171296@gmail.com",recipients=[email])
     # print "SUPP"
     # print email
-    msg.body="Whastup "+first_name
+    msg.subject = "Hey There!"
+    msg.body="Welcome to the Canteen Application "+first_name
     mail.send(msg)
 
     return jsonify({'result' : output})
