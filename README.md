@@ -1,7 +1,7 @@
 # CanteenApp
 
 Built a Responsive Web application to enable remote ordering at my College Canteen. This project was done in order to improve my skills in FrontEnd Development.
-The FrontEnd was done using **HTML**,**CSS**,**Bootstrap** and **JQuery**. All the responsiveness and interactive components you can see on the website has been coded by be from scratch (mostly), without using third party libraries as a personal challenge and learning exercise.
+The FrontEnd was done using **HTML**,**CSS**,**Bootstrap** and **JQuery**. All the responsiveness and interactive components you can see on the website has been coded by me from scratch (mostly), without using third party libraries as a personal challenge and learning exercise.
 
 I have also used **Regular Expressions**, with patterns created on my own, to verify login credentials.
 
